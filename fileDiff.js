@@ -1,17 +1,7 @@
-var myArgs = process.argv.slice(2);
-//let f1name = myArgs[0];
-//let f2name = '';
-//var fileInput = document.getElementById('fileInput');
+let myArgs = process.argv.slice(2);
 const fs = require('fs');
-//var file = fileInput.files[0]
-//const content = fs.readFileSync('blah.txt', {encoding:'utf8', flag:'r'});
 let f1lines = fs.readFileSync(myArgs[0], {encoding:'utf8', flag:'r'}).split('\n');
 let f2lines = fs.readFileSync(myArgs[1], {encoding:'utf8', flag:'r'}).split('\n');
-
-/*for (let line = 0; line < f1lines.length; line++){
-    console.log(f1lines[line]);
-    console.log(f2lines[line]);
-};*/
 
 function lookForSameLine(line, file, index){
     const count = file.length;
