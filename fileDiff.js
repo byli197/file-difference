@@ -5,7 +5,11 @@ let f2lines = fs.readFileSync(myArgs[1], {encoding:'utf8', flag:'r'}).split('\n'
 
 function lookForSameLine(line, file, index){
     const count = file.length;
+    const maxDiff = 10;
     for (let i = index; i < count; i++){
+        if ((i - index)> maxDiff){
+            return (count);
+        };
         if (file[i] === line){
             return (i);
         };
@@ -28,6 +32,7 @@ function compareFile (f1, f2){
         } else {
             next1 = lookForSameLine( f2[index2], f1, index1);
             next2 = lookForSameLine( f1[index1], f2, index2);
+            
             if (next1 === count1 && next2 === count2){
                 next1 = index1 + 1;
                 next2 = index2 + 1; 
@@ -35,13 +40,19 @@ function compareFile (f1, f2){
                 next2 = index2;
             } else if (next1 === count1){
                 next1 = index1;
+            } else {
+                if ((next1 - index1) < (next2 - index2)){
+                    next2 = index2;
+                } else {
+                    next1 = index1;
+                };
             };
 
             for (let i = index1; i < next1; i++){
-                result.push("+" + f1[i]);
+                result.push("+++ " + f1[i]);
             };
             for (let i = index2; i < next2; i++){
-                result.push("-" + f2[i]);
+                result.push("--- " + f2[i]);
             };
             index1 = next1;
             index2 = next2;
